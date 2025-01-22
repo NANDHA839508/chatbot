@@ -5,23 +5,23 @@ from flask_mysqldb import MySQL
 app = Flask(__name__)
 
 # Generate a secure, random secret key
-app.secret_key = secrets.token_hex(16)  # Generates a 32-character hex string
+app.secret_key = secrets.token_hex(16)
 
-# MySQL configuration (replace with your own database details)
-app.config['MYSQL_HOST'] = 'localhost'  # Your MySQL server host
-app.config['MYSQL_USER'] = 'root'       # Your MySQL username
-app.config['MYSQL_PASSWORD'] = ''  # Your MySQL password
-app.config['MYSQL_DB'] = 'chatbot'  # Your database name
+# MySQL configuration
+app.config['MYSQL_HOST'] = 'localhost'
+app.config['MYSQL_USER'] = 'root'
+app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_DB'] = 'chatbot'
 
 mysql = MySQL(app)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('signup.html')
 
 @app.route('/Welcome')
 def Welcome():
-    return render_template('index.html')
+    return render_template('login.html')
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -31,12 +31,11 @@ def login():
     cur = mysql.connection.cursor()
     cur.execute("SELECT * FROM users WHERE username = %s AND password = %s", (username, password))
     user = cur.fetchone()
-    print (user)
     cur.close()
 
     if user:
         flash("Login successful!", "success")
-        return redirect(url_for('Welcome'))
+        return redirect(url_for('chat'))
     else:
         flash("Invalid username or password", "danger")
         return redirect(url_for('home'))
@@ -65,6 +64,22 @@ def register():
     flash("Registration successful! You can now login.", "success")
     return redirect(url_for('Welcome'))
 
+@app.route('/chat', methods=['GET', 'POST'])
+def chat():
+    if request.method == 'POST':
+        user_message = request.form['message']
+        response = generate_response(user_message)
+        return render_template('chat.html', user_message=user_message, response=response)
+    return render_template('chat.html', user_message=None, response=None)
+
+def generate_response(message):
+    # Basic command-based responses
+    commands = {
+        "hello": "Hello! How can I assist you?",
+        "help": "Here are some commands you can try: hello, help, exit.",
+        "exit": "Goodbye! Have a great day!",
+    }
+    return commands.get(message.lower(), "Sorry, I didn't understand that. Try typing 'help'.")
 
 if __name__ == '__main__':
     app.run(debug=True)
