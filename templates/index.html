@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register & Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .form-toggle {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .form-toggle a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        .form-toggle a:hover {
+            text-decoration: underline;
+        }
+        .flash-message {
+            padding: 10px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .flash-success {
+            background-color: #28a745;
+            color: white;
+        }
+        .flash-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Display Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Login Form -->
+        <form action="/login" method="POST" id="login-form">
+            <h1>Login</h1>
+
+            <!-- Username -->
+            <input type="text" name="username" placeholder="Username" required>
+
+            <!-- Password -->
+            <input type="password" name="password" placeholder="Password" required>
+
+            <!-- Submit Button -->
+            <button type="submit">Login</button>
+            <div class="form-toggle">
+                Create new account?<a href="#register" onclick="toggleForm()">Register</a>
+            </div>
+        </form>
+
+        <!-- Register Form -->
+        <form action="/register" method="POST" id="register-form" style="display:none;">
+            <h1>Register</h1>
+
+            <!-- Full Name -->
+            <input type="text" name="name" placeholder="Full Name" required>
+
+            <!-- Email -->
+            <input type="email" name="email" placeholder="Email Address" required>
+
+            <!-- Username -->
+            <input type="text" name="username" placeholder="Username" required>
+
+            <!-- Password -->
+            <input type="password" name="password" placeholder="Password" required>
+
+            <!-- Submit Button -->
+            <button type="submit">Register</button>
+        </form>
+
+        <div class="form-toggle" id="login-toggle" style="display:none;">
+            <p>Already have an account? <a href="#login" onclick="toggleForm()">Login</a></p>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm() {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const loginToggle = document.getElementById('login-toggle');
+
+            loginForm.style.display = loginForm.style.display === 'none' ? 'block' : 'none';
+            registerForm.style.display = registerForm.style.display === 'none' ? 'block' : 'none';
+            loginToggle.style.display = loginToggle.style.display === 'none' ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
