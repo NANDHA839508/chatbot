@@ -15,13 +15,20 @@ app.config['MYSQL_DB'] = 'chatbot'
 
 mysql = MySQL(app)
 
+
 @app.route('/')
 def home():
+    return render_template('home.html')
+
+@app.route('/signup')
+def register():
     return render_template('signup.html')
 
-@app.route('/Welcome')
+@app.route('/login')
 def Welcome():
     return render_template('login.html')
+
+
 
 @app.route('/login', methods=['POST'])
 def login():
@@ -40,8 +47,8 @@ def login():
         flash("Invalid username or password", "danger")
         return redirect(url_for('home'))
 
-@app.route('/register', methods=['POST'])
-def register():
+@app.route('/signup', methods=['POST'])
+def signup():
     name = request.form['name']
     email = request.form['email']
     username = request.form['username']

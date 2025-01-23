@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChatBot Application</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(to right, #4facfe, #00f2fe);
+            color: #fff;
+        }
+
+        header {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            text-decoration: none;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            color: #00f2fe;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 100px 20px;
+            background: url('https://via.placeholder.com/1920x1080') no-repeat center center/cover;
+            border-radius: 10px;
+            margin: 30px auto;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .hero .btn {
+            text-decoration: none;
+            padding: 15px 30px;
+            background: #00f2fe;
+            color: #000;
+            font-weight: bold;
+            border-radius: 30px;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .hero .btn:hover {
+            background: #4facfe;
+            transform: scale(1.1);
+        }
+
+        .features {
+            display: flex;
+            justify-content: space-between;
+            text-align: center;
+            margin: 50px auto;
+            width: 90%;
+            max-width: 1200px;
+        }
+
+        .feature {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+            flex: 1;
+            margin: 0 10px;
+        }
+
+        .feature h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .feature p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        footer p {
+            font-size: 14px;
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+            <div class="container">
+                <h1 class="logo">
+                    <img src="{{ url_for('static', filename='images/chat-bot.png') }}" style="height: 50px; vertical-align: middle; margin-right: 10px;">
+                    ChatBot
+                </h1>
+                <nav>
+                    <ul>
+                        <li><a href="{{ url_for('register') }}">Sign Up</a></li>
+                        <li><a href="{{ url_for('Welcome') }}">Login</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+    <main>
+        <section class="hero">
+            <h1>Welcome to ChatBot</h1>
+            <p>Your intelligent assistant for all your needs. Chat, explore, and interact effortlessly with AI at your fingertips.</p>
+            <a href="{{ url_for('login') }}" class="btn">Get Started</a>
+        </section>
+        <section class="features">
+            <div class="feature">
+                <h3>Explore</h3>
+                <p>Discover endless possibilities with our AI-driven chatbot, tailored to assist you.</p>
+            </div>
+            <div class="feature">
+                <h3>Search</h3>
+                <p>Quickly find information and answers to your questions with ease.</p>
+            </div>
+            <div class="feature">
+                <h3>Profile</h3>
+                <p>Customize your experience and manage your preferences with your personal profile.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 ChatBot Application. All rights reserved.</p>
+    </footer>
+</body>
+</html>
