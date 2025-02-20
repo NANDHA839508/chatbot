@@ -1,117 +1,78 @@
-/* General Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* Body Styles */
+/* General Styles */
 body {
     font-family: 'Roboto', sans-serif;
-    background-color: #f4f4f9;
-    color: #333;
-}
-
-/* Header Section */
-header {
-    background-color: #005f99;
-    padding: 20px 0;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-header .container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    margin: 0 auto;
-}
-
-header .logo {
-    color: #fff;
-    font-size: 24px;
-    font-weight: 700;
-}
-
-header nav ul {
-    list-style: none;
-    display: flex;
-    gap: 20px;
-}
-
-header nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-header nav ul li a:hover {
-    text-decoration: underline;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, rgb(73, 180, 162), hsl(253, 100%, 50%));
+    color: #df2626;
+    text-align: center;
 }
 
 /* Hero Section */
 .hero {
-    text-align: center;
-    padding: 100px 20px;
-    background-color: #e0f7fa;
-    color: #005f99;
+    padding: 50px 20px;
+    background: rgba(196, 50, 13, 0.705);
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 800px;
 }
 
 .hero h1 {
     font-size: 36px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+    animation: fadeInUp 1.5s ease-in-out;
 }
 
 .hero p {
     font-size: 18px;
-    margin-bottom: 30px;
-    line-height: 1.6;
+    margin-bottom: 20px;
 }
 
-.hero .btn {
+.btn {
+    display: inline-block;
     padding: 10px 20px;
-    background-color: #005f99;
-    color: #fff;
+    background: #ff9a9e;
+    color: #000;
     text-decoration: none;
     border-radius: 5px;
-    font-size: 16px;
     font-weight: bold;
+    transition: 0.3s;
 }
 
-.hero .btn:hover {
-    background-color: #0073b1;
+.btn:hover {
+    background: #fad0c4;
 }
 
 /* Features Section */
 .features {
     display: flex;
-    justify-content: space-around;
-    padding: 50px 20px;
-    background-color: #f4f4f9;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-top: 30px;
 }
 
 .feature {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 250px;
     text-align: center;
-    max-width: 300px;
+    transition: 0.3s;
 }
 
-.feature h3 {
-    font-size: 24px;
-    color: #005f99;
-    margin-bottom: 10px;
+.feature:hover {
+    transform: scale(1.05);
 }
 
-.feature p {
-    font-size: 16px;
-    line-height: 1.6;
-}
-
-/* Footer */
-footer {
-    background-color: #005f99;
-    color: #fff;
-    text-align: center;
-    padding: 10px 0;
-    margin-top: 20px;
-    font-size: 14px;
+/* Animation for Heading */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }

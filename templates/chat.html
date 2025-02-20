@@ -3,35 +3,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Chatbot</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='chat.css') }}">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Chat</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="static/css/chat.css" rel="stylesheet">
 </head>
 <body>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <button class="close-btn" onclick="toggleSidebar()">×</button>
-        <h2>Chat History</h2>
-        <input type="text" placeholder="Search chats..." id="searchChats">
-        <div class="recent-messages" id="chatHistory"></div>
-        <button onclick="startNewChat()">New Chat</button>
-    </div>
+    <div class="container vh-100 d-flex align-items-center">
+        <div class="row w-100 d-flex align-items-center justify-content-between">
+            <!-- Chat Container (8 Columns on md & lg) -->
+            <div class="col-12 col-md-8">
+                <div class="chat-container p-4 shadow-lg rounded w-100">
+                    <div id="chat-box" class="chat-box mb-3"></div>
+                    <input type="text" id="user-input" class="form-control mb-2" placeholder="Type a message...">
+                    <button class="btn btn-primary w-100" onclick="sendMessage()">Send</button>
+                </div>
+            </div>
+            
+            
 
-    <!-- Chat Container -->
-    <div class="chat-container">
-        <h1>Chatbot</h1>
-        <div class="messages" id="chatBox"></div>
-
-        <!-- Input Box -->
-        <div class="input-container">
-            <input type="text" id="userMessage" placeholder="Type your message..." required>
-            <button onclick="sendMessage()">Send</button>
-            <button onclick="recordAudio()">🎤</button>
+            <!-- H1 Section (4 Columns on md & lg) -->
+            <div class="col-12 col-md-4 text-center">
+                <h1 class="display-4">Fin Assist</h1>
+            </div>
         </div>
     </div>
 
-    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+    <div class="container mt-4">
+        <div id="suggestions" style="display: none;">
+            <div class="bot-message mb-2">How can I assist you?</div>
+            <a href="/chart" class="btn btn-outline-primary d-block mb-2">Chart</a>
+            <a href="/investment" class="btn btn-outline-primary d-block mb-2"> Investment </a>
+            <a href="/long-term-investment" class="btn btn-outline-primary d-block mb-2">Long-Term Investment</a>
+            <a href="/short-term-investment" class="btn btn-outline-primary d-block mb-2">Short-Term Investment</a>
+            <a href="/Stock Price" class="btn btn-outline-primary d-block">Stock Price</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="static/chat.js"></script>
+
 </body>
 </html>
- 

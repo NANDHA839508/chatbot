@@ -88,21 +88,50 @@
             text-decoration: underline;
         }
     </style>
+<script>
+    function handleLogin(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        const formData = new FormData(event.target);
+
+        fetch('/login', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => {
+            console.log("Response:", response);  // Debugging Log
+            return response.json();
+        })
+        .then(data => {
+            console.log("Response Data:", data);  // Debugging Log
+
+            if (data.success) {
+                window.location.href = data.redirect; // ✅ Redirect on successful login
+            } else {
+                alert(data.message || 'Login failed. Please check your credentials.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("An error occurred while logging in. Please try again.");
+        });
+    }
+</script>
 </head>
 <body>
     <div class="container">
         <div class="form-container">
             <h2>Login</h2>
-            <form action="/login" method="POST">
+            <form action="/login" method="POST" onsubmit="handleLogin(event)">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" placeholder="Enter your username" required>
-
+            
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password" placeholder="Enter your password" required>
-
+            
                 <button type="submit">Login</button>
             </form>
-
+            
             <p>Don't have an account? <a href="/signup">Sign up here</a></p>
         </div>
     </div>

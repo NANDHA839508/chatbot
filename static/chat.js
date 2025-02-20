@@ -1,66 +1,34 @@
-function toggleSidebar() {
-    document.querySelector(".sidebar").classList.toggle("hidden");
-}
-
-// Clears chat on frontend (does not clear server history)
-function startNewChat() {
-    document.getElementById("chatBox").innerHTML = "";
-}
-
 function sendMessage() {
-    let userMessage = document.getElementById("userMessage").value.trim();
-    if (userMessage === "") return;
+    let userInput = document.getElementById("user-input").value.trim().toLowerCase();
+    let chatBox = document.getElementById("chat-box");
 
-    // Append user message to chat
-    $("#chatBox").append("<p><strong>You:</strong> " + userMessage + "</p>");
+    if (userInput === "") return;
 
-    // Send request to Flask backend
-    $.ajax({
-        url: "/send_message",
-        type: "POST",
-        contentType: "application/json",
-        data: JSON.stringify({ message: userMessage }),
-        success: function (data) {
-            $("#chatBox").append("<p><strong>Bot:</strong> " + data.bot_response + "</p>");
-        },
-        error: function () {
-            $("#chatBox").append("<p><strong>Bot:</strong> Sorry, an error occurred.</p>");
-        }
-    });
+    // Append user's message to chat box
+    let userMessage = `<div class='user-message'>${userInput}</div>`;
+    chatBox.innerHTML += userMessage;
 
-    document.getElementById("userMessage").value = ""; // Clear input field
-}
+    // Greeting detection
+    let greetings = ["hi", "hello", "hey", "help"];
+    if (greetings.includes(userInput)) {
+        chatBox.innerHTML += document.getElementById("suggestions").innerHTML;
+    }
 
-// Load chat history from backend
-function loadChatHistory() {
-    $.get("/chat_history", function (data) {
-        let chatHistory = document.getElementById("chatHistory");
-        chatHistory.innerHTML = "";
-        data.forEach(chat => {
-            chatHistory.innerHTML += `<p><strong>${chat[0]}:</strong> ${chat[1]}</p>`;
-        });
-    }).fail(function () {
-        console.error("Error loading chat history");
-    });
-}
-
-// Audio Recording (Speech-to-Text)
-function recordAudio() {
-    let recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    recognition.lang = "en-US";
-    recognition.start();
-
-    recognition.onresult = function (event) {
-        let speechText = event.results[0][0].transcript;
-        document.getElementById("userMessage").value = speechText;
-        sendMessage();
+    // Navigation Logic
+    let navigationLinks = {
+        "chart": "chart.html",
+        "investment": "/investment",
+        "long-term investment": "long-term-investment.html",
+        "short-term investment": "short-term-investment.html",
+        "stock price": "Stock Price.html"
     };
 
-    recognition.onerror = function (event) {
-        console.error("Speech recognition error:", event.error);
-    };
-}
+    if (navigationLinks[userInput]) {
+        window.location.href = navigationLinks[userInput];  // Redirect to the respective page
+        return;
+    }
 
-$(document).ready(function () {
-    loadChatHistory();
-});
+    // Clear input field
+    document.getElementById("user-input").value = "";
+    chatBox.scrollTop = chatBox.scrollHeight;
+}

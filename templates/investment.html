@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment - Fin Invest</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, #1e3a8a, #3b82f6);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        header .logo {
+            width: 50px;
+            height: auto;
+        }
+
+        header h1 {
+            font-size: 28px;
+            margin-left: 15px;
+        }
+
+        .chatbot-btn {
+            background-color: #10b981;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 25px;
+            transition: background-color 0.3s;
+        }
+
+        .chatbot-btn:hover {
+            background-color: #059669;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #1e3a8a;
+            padding: 15px 0;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+
+        nav ul li a:hover {
+            color: #93c5fd;
+        }
+
+        /* Introduction Section */
+        .introduction {
+            padding: 50px 20px;
+            background-color: #fff;
+            margin: 20px auto;
+            max-width: 1200px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .intro-container {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .intro-image {
+            width: 50%;
+            border-radius: 10px;
+        }
+
+        .intro-text h2 {
+            font-size: 32px;
+            margin-bottom: 15px;
+            color: #1e3a8a;
+        }
+
+        .intro-text p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .learn-more-btn {
+            background-color: #3b82f6;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .learn-more-btn:hover {
+            background-color: #1e3a8a;
+        }
+
+        /* Container */
+        .container {
+            display: flex;
+            max-width: 1200px;
+            margin: 20px auto;
+            gap: 20px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            color: #1e3a8a;
+            margin-bottom: 20px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar ul li {
+            margin-bottom: 15px;
+        }
+
+        .sidebar ul li a {
+            display: block;
+            background-color: #e5e7eb;
+            padding: 15px;
+            text-decoration: none;
+            color: #1e3a8a;
+            font-weight: bold;
+            border-radius: 8px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #3b82f6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Main Content */
+        .content {
+            flex: 1;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .content section {
+            margin-bottom: 40px;
+        }
+
+        .content h2 {
+            font-size: 28px;
+            color: #1e3a8a;
+            margin-bottom: 15px;
+        }
+
+        .content h3 {
+            font-size: 22px;
+            color: #1e3a8a;
+            margin-top: 20px;
+        }
+
+        .content ul {
+            list-style: none;
+            padding-left: 20px;
+        }
+
+        .content ul li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        /* News Box */
+        .news-box {
+            background-color: #e5e7eb;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            display: none;
+            /* Hidden by default */
+        }
+
+        .news-box.active {
+            display: block;
+            /* Shown when active */
+        }
+
+        .news-box h2 {
+            font-size: 24px;
+            color: #1e3a8a;
+        }
+
+        .news-box p {
+            font-size: 16px;
+            margin-top: 10px;
+        }
+
+        /* Related News Content */
+        .related-news {
+            display: none;
+            /* Hidden by default */
+        }
+
+        .related-news.active {
+            display: block;
+            /* Shown when active */
+        }
+
+        .related-news .news-item {
+            background-color: #f9fafb;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .related-news .news-item h3 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .related-news .news-item p {
+            font-size: 16px;
+        }
+
+        /* Form */
+        form {
+            display: grid;
+            gap: 15px;
+            max-width: 500px;
+        }
+
+        form label {
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        form input {
+            padding: 10px;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        form button {
+            background-color: #10b981;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        form button:hover {
+            background-color: #059669;
+        }
+
+        /* Search Bar */
+        #search-bar input {
+            width: 70%;
+            padding: 12px;
+            margin-right: 10px;
+        }
+
+        #search-bar button {
+            background-color: #3b82f6;
+        }
+
+        #search-bar button:hover {
+            background-color: #1e3a8a;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header>
+        <img src="{{ url_for('static', filename='images/profit.png') }}" class="logo" alt="Fin Invest Logo">
+        <h1>Fin Invest</h1>
+        <a href="{{ url_for('home') }}" class="chatbot-btn">Go Home</a>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a onclick="showNews()">News</a></li>
+            <li><a href="#broker">Contact Broker</a></li>
+            
+        </ul>
+    </nav>
+
+    <!-- Introduction Section -->
+    <section class="introduction">
+        <div class="intro-container">
+            <img src="{{ url_for('static', filename='images/investment.jpg') }}" class="intro-image"
+                alt="Investment Growth">
+            <div class="intro-text">
+                <h2>Introduction to Investment</h2>
+                <p>
+                    A financial investment is an asset that you put money into with the hope that it will grow
+                    or appreciate into a larger sum of money. The goal is to generate returns over time, either through
+                    selling at a higher price or earning passive income while holding the asset.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fetch and Display Live Investment News -->
+
+
+    <!-- Main Container -->
+    <div class="container">
+     
+        <main class="content">
+    
+        
+
+        <!-- Investment News Section (Hidden Initially) -->
+        <section id="news-section" style="display: none;">
+            <h2>Latest Investment News</h2>
+            <div id="news-results">
+                <!-- Latest Investment News will be displayed here dynamically -->
+            </div>
+        </section>
+
+
+
+
+
+
+        <!-- Contact Broker Form -->
+        <section id="contact-broker">
+            <h2>Contact a Broker</h2>
+            <form action="/submit_broker" method="POST">
+                <label>Name:</label>
+                <input type="text" name="name" required>
+
+                <label>Email:</label>
+                <input type="email" name="email" required>
+
+                <label>Country:</label>
+                <input type="text" name="country" required>
+
+                <label>Phone Number:</label>
+                <input type="text" name="phone" required>
+
+                <label>Company:</label>
+                <input type="text" name="company" required>
+
+                <label>Sector:</label>
+                <input type="text" name="sector" required>
+
+                <button type="submit">Submit</button>
+            </form>
+
+            <h3>Registered Brokers</h3>
+            <ul>
+                {% for broker in brokers %}
+                <li>{{ broker.name }} - {{ broker.company }} ({{ broker.country }})</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+    </main>
+
+        <!-- JavaScript to Fetch and Show News -->
+        <script>
+            const API_KEY = "5ba6c51ff97d4d61bf3ead54776afdd8";
+            const NEWS_URL = `https://newsapi.org/v2/everything?q=investment&language=en&apiKey=${API_KEY}`;
+
+            async function fetchLiveNews() {
+                try {
+                    const response = await fetch(NEWS_URL);
+                    const data = await response.json();
+                    const newsContainer = document.getElementById("news-results");
+
+                    newsContainer.innerHTML = ""; // Clear previous news
+
+                    if (data.articles.length === 0) {
+                        newsContainer.innerHTML = "<p>No investment news found.</p>";
+                        return;
+                    }
+
+                    data.articles.slice(0, 5).forEach(article => {
+                        const newsItem = document.createElement("div");
+                        newsItem.classList.add("news-item");
+
+                        newsItem.innerHTML = `
+                        <h3>${article.title}</h3>
+                        <p>${article.description || "No description available."}</p>
+                        <p><strong>Source:</strong> ${article.source.name}</p>
+                    `;
+
+                        newsContainer.appendChild(newsItem);
+                    });
+
+                    // Show the news section
+                    document.getElementById("news-section").style.display = "block";
+                } catch (error) {
+                    console.error("Error fetching news:", error);
+                    document.getElementById("news-results").innerHTML = "<p>Failed to load news. Try again later.</p>";
+                }
+            }
+
+            function showNews() {
+                fetchLiveNews(); // Fetch news automatically
+                window.scrollTo({ top: document.getElementById("news-section").offsetTop - 20, behavior: "smooth" });
+            }
+        </script>
+
+
+</body>
+
+</html>
